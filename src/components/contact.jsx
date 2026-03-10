@@ -1,12 +1,14 @@
 import { useState } from "react";
 import emailjs from "emailjs-com";
 import React from "react";
+import "../styles/contact.css";
 
 const initialState = {
   name: "",
   email: "",
   message: "",
 };
+
 export const Contact = (props) => {
   const [{ name, email, message }, setState] = useState(initialState);
 
@@ -14,20 +16,18 @@ export const Contact = (props) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
+
   const clearState = () => setState({ ...initialState });
-  
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, email, message);
     
-    {/* replace below with your own Service ID, Template ID and Public Key from your EmailJS account */ }
-    
+    // Replace with your actual EmailJS IDs
     emailjs
       .sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", e.target, "YOUR_PUBLIC_KEY")
       .then(
         (result) => {
-          console.log(result.text);
+          alert("Message Sent Successfully!");
           clearState();
         },
         (error) => {
@@ -35,131 +35,102 @@ export const Contact = (props) => {
         }
       );
   };
+
   return (
-    <div>
-      <div id="contact">
-        <div className="container">
-          <div className="col-md-8">
-            <div className="row">
-              <div className="section-title">
-                <h2>Get In Touch</h2>
-                <p>
-                  Please fill out the form below to send us an email and we will
-                  get back to you as soon as possible.
-                </p>
-              </div>
-              <form name="sentMessage" validate onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        className="form-control"
-                        placeholder="Name"
-                        required
-                        onChange={handleChange}
-                      />
-                      <p className="help-block text-danger"></p>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Email"
-                        required
-                        onChange={handleChange}
-                      />
-                      <p className="help-block text-danger"></p>
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <textarea
-                    name="message"
-                    id="message"
-                    className="form-control"
-                    rows="4"
-                    placeholder="Message"
+    <section id="contact-section">
+      <div className="ct-main-container">
+        
+        <div className="ct-grid">
+          {/* LEFT SIDE: FORM */}
+          <div className="ct-form-column">
+            <div className="ct-header">
+              <div className="ct-accent-bar"></div>
+              <h2 className="ct-title">Get In <span>Touch</span></h2>
+              <p className="ct-subtitle">
+                Partner with Aber Al-Khayal for your next engineering milestone.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="ct-form">
+              <div className="ct-input-row">
+                <div className="ct-field">
+                  <input
+                    type="text"
+                    name="name"
+                    value={name}
+                    placeholder="Full Name"
                     required
                     onChange={handleChange}
-                  ></textarea>
-                  <p className="help-block text-danger"></p>
+                  />
                 </div>
-                <div id="success"></div>
-                <button type="submit" className="btn btn-custom btn-lg">
-                  Send Message
-                </button>
-              </form>
-            </div>
+                <div className="ct-field">
+                  <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    placeholder="Email Address"
+                    required
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="ct-field">
+                <textarea
+                  name="message"
+                  value={message}
+                  rows="5"
+                  placeholder="Tell us about your project..."
+                  required
+                  onChange={handleChange}
+                ></textarea>
+              </div>
+              <button type="submit" className="ct-submit-btn">
+                Send Inquiry <span>→</span>
+              </button>
+            </form>
           </div>
-          <div className="col-md-3 col-md-offset-1 contact-info">
-            <div className="contact-item">
-              <h3>Contact Info</h3>
-              <p>
-                <span>
-                  <i className="fa fa-map-marker"></i> Address
-                </span>
-                {props.data ? props.data.address : "loading"}
-              </p>
-            </div>
-            <div className="contact-item">
-              <p>
-                <span>
-                  <i className="fa fa-phone"></i> Phone
-                </span>{" "}
-                {props.data ? props.data.phone : "loading"}
-              </p>
-            </div>
-            <div className="contact-item">
-              <p>
-                <span>
-                  <i className="fa fa-envelope-o"></i> Email
-                </span>{" "}
-                {props.data ? props.data.email : "loading"}
-              </p>
-            </div>
-          </div>
-          <div className="col-md-12">
-            <div className="row">
-              <div className="social">
-                <ul>
-                  <li>
-                    <a href={props.data ? props.data.facebook : "/"}>
-                      <i className="fa fa-facebook"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href={props.data ? props.data.twitter : "/"}>
-                      <i className="fa fa-twitter"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href={props.data ? props.data.youtube : "/"}>
-                      <i className="fa fa-youtube"></i>
-                    </a>
-                  </li>
-                </ul>
+
+          {/* RIGHT SIDE: INFO */}
+          <div className="ct-info-column">
+            <div className="ct-info-card">
+              <h3>Contact Details</h3>
+              
+              <div className="ct-info-item">
+                <div className="ct-icon">📍</div>
+                <div>
+                  <h4>Headquarters</h4>
+                  <p>{props.data ? props.data.address : "Riyadh, Saudi Arabia"}</p>
+                </div>
+              </div>
+
+              <div className="ct-info-item">
+                <div className="ct-icon">📞</div>
+                <div>
+                  <h4>Call Us</h4>
+                  <p>{props.data ? props.data.phone : "+966 ..."}</p>
+                </div>
+              </div>
+
+              <div className="ct-info-item">
+                <div className="ct-icon">✉</div>
+                <div>
+                  <h4>Email Support</h4>
+                  <p>{props.data ? props.data.email : "info@aberalkhayal.com"}</p>
+                </div>
+              </div>
+
+              <div className="ct-social-links">
+                <a href={props.data?.facebook || "#"} className="ct-social-icon">FB</a>
+                <a href={props.data?.twitter || "#"} className="ct-social-icon">TW</a>
+                <a href={props.data?.youtube || "#"} className="ct-social-icon">YT</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div id="footer">
-        <div className="container text-center">
-          <p>
-            &copy; 2023 Issaaf Kattan React Land Page Template. Design by{" "}
-            <a href="http://www.templatewire.com" rel="nofollow">
-              TemplateWire
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
+
+      {/* FOOTER AREA */}
+      
+    </section>
   );
 };

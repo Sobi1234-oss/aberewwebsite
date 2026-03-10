@@ -1,0 +1,593 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@300;400;600&display=swap');
+
+/* ══════════════════════════════════════════════
+   SERVICES SECTION — pinned scroll
+══════════════════════════════════════════════ */
+#services-section {
+    background: #f4f2ee;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+
+.services-inner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 48px 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Heading ──────────────────────────────── */
+.srv-header-group {
+    flex-shrink: 0;
+    margin-bottom: 32px;
+}
+
+.srv-arabic-label {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    font-size: 15px;
+    color: #ff7b00;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.srv-main-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(36px, 5vw, 70px);
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #111;
+}
+.srv-main-title span { color: #ff7b00; }
+
+/* ── Stack wrapper fills remaining viewport ── */
+.services-stack-wrapper {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+/* ── Each card is absolutely stacked ─────── */
+.service-item-slow {
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 0.65fr;
+    gap: 32px;
+    align-items: stretch;
+    height: 100%;
+}
+
+/* Hide mobile horizontal slider on desktop */
+.srv-col-slider--mobile {
+    display: none;
+}
+
+/* ══════════════════════════════════════════════
+   COL 1 — MAIN IMAGE
+══════════════════════════════════════════════ */
+.srv-col-image {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+}
+
+.srv-img-frame {
+    position: relative;
+    width: 100%;
+    max-height: 520px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 24px 56px rgba(0,0,0,0.13);
+}
+
+.srv-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.srv-number-overlay {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255, 123, 0, 0.06);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.srv-img-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #fff;
+    background: #ff7b00;
+    padding: 6px 14px;
+    border-radius: 4px;
+    z-index: 3;
+}
+
+/* ══════════════════════════════════════════════
+   COL 2 — CONTENT
+══════════════════════════════════════════════ */
+.srv-col-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 0 20px;
+}
+
+.srv-arabic-sub {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    font-size: 13px;
+    color: #ff7b00;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    direction: rtl;
+}
+
+.srv-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #111;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+
+.srv-accent-bar {
+    width: 40px;
+    height: 3px;
+    background: #ff7b00;
+    margin-bottom: 18px;
+    border-radius: 2px;
+}
+
+.srv-desc {
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.srv-desc-extra {
+    color: #666;
+    font-size: 14px;
+}
+
+.srv-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.srv-tag {
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #ff7b00;
+    border: 1px solid rgba(255,123,0,0.25);
+    background: rgba(255,123,0,0.05);
+    padding: 5px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.srv-signature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+}
+.srv-sig-line {
+    width: 35px;
+    height: 1px;
+    background: #ff7b00;
+    flex-shrink: 0;
+}
+.srv-sig-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #111;
+    letter-spacing: 2px;
+}
+
+/* ══════════════════════════════════════════════
+   COL 3 — VERTICAL AUTO-SLIDER (desktop)
+══════════════════════════════════════════════ */
+.srv-col-slider {
+    display: flex;
+    align-items: stretch;
+}
+
+.vsld-root {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 95%;
+}
+
+.vsld-label {
+    flex-shrink: 0;
+    margin-bottom: 12px;
+}
+
+.vsld-label-txt {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaa;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.vsld-label-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+}
+
+.vsld-window {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    min-height: 0;
+}
+
+.vsld-window::before,
+.vsld-window::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 2;
+    pointer-events: none;
+}
+.vsld-window::before {
+    top: 0;
+    background: linear-gradient(to bottom, #f4f2ee, transparent);
+}
+.vsld-window::after {
+    bottom: 0;
+    background: linear-gradient(to top, #f4f2ee, transparent);
+}
+
+.vsld-track {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: vsldScrollUp 18s linear infinite;
+    padding: 6px 0;
+}
+
+.vsld-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes vsldScrollUp {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(calc(-33.333% - 4px)); }
+}
+
+.vsld-card {
+    flex-shrink: 0;
+    width: 100%;
+    height: 140px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.vsld-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.vsld-card:hover img {
+    transform: scale(1.07);
+}
+
+.vsld-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(255,123,0,0.85), transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.vsld-card:hover .vsld-overlay {
+    opacity: 1;
+}
+
+.vsld-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* ══════════════════════════════════════════════
+   HORIZONTAL AUTO-SLIDER (mobile only)
+══════════════════════════════════════════════ */
+.hsld-root {
+    width: 100%;
+}
+
+.hsld-label {
+    margin-bottom: 12px;
+}
+
+.hsld-label-txt {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaa;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.hsld-label-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+}
+
+/* Horizontal scroll window */
+.hsld-window {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+}
+
+/* Fade masks left + right */
+.hsld-window::before,
+.hsld-window::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    z-index: 2;
+    pointer-events: none;
+}
+.hsld-window::before {
+    left: 0;
+    background: linear-gradient(to right, #f4f2ee, transparent);
+}
+.hsld-window::after {
+    right: 0;
+    background: linear-gradient(to left, #f4f2ee, transparent);
+}
+
+/* Horizontal scrolling track */
+.hsld-track {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 6px 0;
+    animation: hsldScrollLeft 18s linear infinite;
+    width: max-content;
+}
+
+.hsld-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes hsldScrollLeft {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(calc(-33.333% - 4px)); }
+}
+
+/* Individual card in horizontal slider */
+.hsld-card {
+    flex-shrink: 0;
+    width: 200px;
+    height: 140px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.hsld-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.hsld-card:hover img {
+    transform: scale(1.07);
+}
+
+.hsld-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(255,123,0,0.85), transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hsld-card:hover .hsld-overlay {
+    opacity: 1;
+}
+
+.hsld-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+
+/* Tablet — stack image on top, content + slider side by side */
+@media (max-width: 1024px) {
+    .services-inner {
+        padding: 36px 32px 0;
+    }
+
+    .service-item-slow {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            "img   img"
+            "content slider";
+        height: auto;
+        align-items: start;
+    }
+
+    .srv-col-image  { grid-area: img; height: 280px; }
+    .srv-col-content { grid-area: content; }
+    .srv-col-slider--desktop { grid-area: slider; }
+
+    .vsld-card { height: 110px; }
+
+    .services-stack-wrapper {
+        height: calc(100vh - 160px);
+    }
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE — single column, custom order:
+   1. Heading (already above stack)
+   2. Main Image
+   3. Description / Content
+   4. Horizontal Slider
+══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+    #services-section {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .services-inner {
+        padding: 32px 20px 40px;
+        height: auto;
+    }
+
+    .srv-header-group {
+        margin-bottom: 24px;
+    }
+
+    .services-stack-wrapper {
+        position: relative;
+        height: auto;
+        flex: unset;
+    }
+
+    /* Each card: static flow, flex column */
+    .service-item-slow {
+        position: relative;
+        inset: unset;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        /* Override GSAP visibility on mobile */
+        visibility: visible !important;
+        opacity: 1 !important;
+        margin-bottom: 60px;
+        /* Grid overrides not needed on mobile */
+        grid-template-columns: unset;
+        grid-template-areas: unset;
+    }
+
+    /* Divider between services */
+    .service-item-slow + .service-item-slow {
+        border-top: 1px solid rgba(0,0,0,0.07);
+        padding-top: 40px;
+    }
+
+    /* ORDER: 1 = image, 2 = content, 3 = horizontal slider */
+    .srv-col-image {
+        order: 1;
+        height: 240px;
+        width: 100%;
+    }
+
+    .srv-col-content {
+        order: 2;
+        padding: 0;
+    }
+
+    /* Hide desktop vertical slider on mobile */
+    .srv-col-slider--desktop {
+        display: none !important;
+    }
+
+    /* Show mobile horizontal slider after content */
+    .srv-col-slider--mobile {
+        display: block;
+        order: 3;
+        width: 100%;
+    }
+
+    .srv-img-frame {
+        max-height: unset;
+        height: 100%;
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .srv-main-title {
+        font-size: 32px;
+    }
+
+    .srv-col-image {
+        height: 200px;
+    }
+
+    .srv-tag {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    .hsld-card {
+        width: 160px;
+        height: 120px;
+    }
+}

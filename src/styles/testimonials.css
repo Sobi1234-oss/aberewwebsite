@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap');
+
+#testimonials {
+  background: #f4f2ee;
+  font-family: 'Barlow', sans-serif;
+  padding: 80px 0 100px;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.ts-header {
+  max-width: 1100px;
+  margin: 0 auto 50px;
+  padding: 0 48px;
+}
+
+.ts-accent-bar {
+  width: 60px;
+  height: 0px;
+  background: #ff7b00;
+  margin-bottom: 15px;
+}
+
+.ts-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(34px, 4.5vw, 60px);
+  font-weight: 700;
+  color: #111;
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.ts-title span { color: #ff7b00; }
+
+/* ── SMALL WIDTH MARQUEE (Matches Client/Portions Width) ── */
+.ts-marquee-container {
+  max-width: 1100px; /* SAME WIDTH AS HEADER/FOOTER */
+  margin: 0 auto;
+  padding: 0 48px;
+  overflow: hidden; /* Clips the slider so it doesn't go full width */
+}
+
+.ts-marquee-wrap {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.ts-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: ts-marquee-scroll 35s linear infinite;
+}
+
+.ts-marquee-wrap:hover .ts-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes ts-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Card Styling ── */
+.ts-card {
+  width: 320px; /* Slightly smaller to fit nicely in boxed layout */
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 6px;
+  padding: 25px;
+  margin: 0 12px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.ts-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,123,0,0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.ts-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.ts-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eee;
+}
+
+.ts-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #111;
+}
+
+.ts-location {
+  font-size: 9px;
+  color: #bbb;
+  text-transform: uppercase;
+}
+
+.ts-quote {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.ts-stars { color: #ff7b00; font-size: 11px; }
+
+/* ── Footer ── */
+.ts-footer {
+  max-width: 1100px;
+  margin: 40px auto 0;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ts-footer-text { font-size: 10px; letter-spacing: 2px; color: #bbb; text-transform: uppercase; }
+
+.ts-footer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #111;
+  text-decoration: none;
+  border-bottom: 1.5px solid #111;
+  transition: all 0.25s;
+}
+
+.ts-footer-cta:hover { color: #ff7b00; border-color: #ff7b00; }
+
+@media (max-width: 768px) {
+  .ts-header, .ts-marquee-container, .ts-footer { padding: 0 24px; }
+  .ts-card { width: 280px; }
+}

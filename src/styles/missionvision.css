@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap');
+
+#mv-unique-section {
+    background: #f4f2ee;
+    min-height: 110vh; /* Reverted to match previous style */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Barlow', sans-serif;
+}
+
+.mv-main-container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px; /* Exact match to Expertise width */
+    margin: 0 auto;
+    padding: 80px 48px;
+    perspective: 2000px;
+    z-index: 2;
+}
+.mv-tagline {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    font-size: 16px;
+    color: #ff7b00;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+/* ── Confined Background Layer ── */
+.mv-visual-engine {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.mv-actual-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mv-light-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to right, rgba(225, 223, 219, 0.714) 40%, rgba(244, 242, 238, 0.133) 100%);
+    z-index: 1;
+}
+
+/* ── Grid Layout ── */
+.mv-content-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr; /* Settled on left, empty on right */
+    gap: 40px;
+}
+
+.mv-main-heading {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #111;
+    line-height: 1;
+}
+
+.mv-accent-label {
+    background: #ff7b00;
+    color: white;
+    display: inline-block;
+    padding: 4px 12px;
+    font-weight: 700;
+    margin: 15px 0;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.mv-description-text {
+    font-size: 15px;
+    color: #222;
+    line-height: 1.6;
+    max-width: 480px;
+}
+
+/* ── Horizontal Row of Boxes ── */
+.mv-pillars-horizontal-stack {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.mv-pillar-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-top: 2px solid #ff7b00;
+    flex: 1;
+}
+
+.mv-icon-circle {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.mv-icon-circle.green { background: #28a745; }
+.mv-icon-circle.red { background: #dc3545; }
+.mv-icon-circle.blue { background: #007bff; }
+
+.mv-pillar-card h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    color: #ff7b00;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.mv-pillar-card p {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #333;
+}
+
+@media (max-width: 992px) {
+    .mv-content-grid { grid-template-columns: 1fr; }
+    .mv-pillars-horizontal-stack { flex-direction: column; }
+}

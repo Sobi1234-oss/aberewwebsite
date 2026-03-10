@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;600&display=swap');
+
+/* Section Wrapper */
+.ab-x-section {
+    background: #f4f2ee;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    font-family: 'Barlow', sans-serif;
+}
+
+.ab-x-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 40px;
+}
+
+/* Header Styling */
+.ab-x-header {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    margin-bottom: 50px; /* Space between header and the animated grid */
+    position: relative;
+    z-index: 10;
+}
+
+/* Ensure the section starts at the very top for clean pinning */
+
+
+.ab-x-arabic-sub {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    color: #ff7b00;
+    font-weight: 600;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.ab-x-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(40px, 8vw, 76px);
+    line-height: 1;
+    text-transform: uppercase;
+    color: #111;
+    margin: 0;
+}
+
+.ab-x-title span { color: #ff7b00; }
+
+/* Grid Layout */
+.ab-x-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+/* ─── IMAGE BOX & OVERLAP EFFECT ─── */
+.ab-x-image-box {
+    width: 110%;
+    perspective: 1000px;
+    position: relative; /* Needed for positioning the sub image */
+    height: 550px; /* Fixed height to contain positioned elements */
+}
+
+.ab-x-image-box img {
+    width: 110%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+    display: block;
+    position: absolute; /* Stack them */
+}
+
+/* Primary Image - Larger, positioned behind */
+.ab-img-main {
+    width: 85% !important;
+    height: 90% !important;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Secondary Image - Smaller, positioned in front with border */
+.ab-img-sub {
+    width: 50% !important;
+    height: 50% !important;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    border: 5px solid #f4f2ee; /* Creates a clean gap effect */
+}
+/* ─── END IMAGE BOX ─── */
+
+/* Content Area */
+.ab-x-content h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    line-height: 1.2;
+    color: #111;
+}
+
+.ab-x-content h2 span { color: #ff7b00; }
+
+.ab-x-body p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.ab-x-arabic-quote {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    font-weight: 600;
+    color: #111;
+    border-left: 4px solid #ff7b00;
+    padding-left: 20px;
+    font-size: 17px;
+    margin-top: 30px;
+}
+
+/* Signature */
+.ab-x-footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.ab-x-line { width: 50px; height: 2px; background: #ff7b00; }
+.ab-x-sig { 
+    font-family: 'Noto Sans Arabic', sans-serif; 
+    font-weight: 600; 
+    font-size: 14px; 
+    color: #111;
+}
+
+/* ─── MOBILE RESPONSIVE (992px and below) ─── */
+@media (max-width: 992px) {
+    .ab-x-container {
+        padding: 60px 24px;
+        text-align: center;
+    }
+
+    .ab-x-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .ab-x-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    /* Stack images vertically on mobile */
+    .ab-x-image-box {
+        height: auto;
+        min-height: 400px;
+    }
+    
+    .ab-x-image-box img {
+        position: relative;
+        width: 100% !important;
+        height: 300px !important;
+        margin-bottom: 20px;
+    }
+    
+    .ab-img-sub {
+        width: 100% !important;
+        border: none;
+    }
+
+    .ab-x-arabic-quote {
+        border-left: none;
+        border-top: 2px solid #ff7b00;
+        padding-left: 0;
+        padding-top: 20px;
+        display: inline-block;
+    }
+
+    .ab-x-footer {
+        justify-content: center;
+    }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+    .ab-x-image-box img { height: 250px !important; }
+    .ab-x-title { font-size: 40px; }
+}

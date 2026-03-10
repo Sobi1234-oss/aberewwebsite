@@ -1,0 +1,91 @@
+/* Container Width Constraint - Matches Reference */
+.cp-pro-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px; /* Matches reference padding */
+}
+
+/* New Section Styling - Updated from Reference */
+.cp-pro-section {
+    background-color: #f4f2ee; /* UPDATED: Matches Reference */
+    padding: 100px 0;
+    margin-top: -50px; /* Overlap adjustment */
+    position: relative;
+    z-index: 2;
+}
+
+.cp-pro-content {
+    text-align: left; /* UPDATED: Left Aligned */
+    max-width: 100%;
+    margin: 0;
+}
+
+.cp-pro-sub {
+    font-family: 'Noto Sans Arabic', sans-serif; /* UPDATED: Font Family */
+    color: #ff7b00;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.cp-pro-content h2 {
+    font-family: 'Oswald', sans-serif; /* UPDATED: Font Family */
+    font-size: 76px; /* UPDATED: 76px Size */
+    line-height: 0.9; /* Tight line height for large text */
+    color: #111;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-transform: uppercase; /* UPDATED: Uppercase */
+}
+
+.cp-pro-content h2 span {
+    color: #ff7b00;
+    font-style: italic;
+}
+
+.cp-pro-content p {
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444; /* Darker for readability */
+    margin-bottom: 40px;
+    max-width: 700px; /* Keeps text readable */
+}
+
+.cp-pro-features {
+    display: flex;
+    justify-content: flex-start; /* UPDATED: Left Aligned */
+    gap: 30px;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Barlow', sans-serif;
+}
+
+/* Adjustments for existing components */
+.cp-clients-wrapper {
+    padding-top: 20px;
+}
+
+.cp-testimonials-wrapper {
+    margin-top: -70px;
+}
+
+/* Responsive adjustment - Updated from Reference */
+@media (max-width: 992px) {
+    .cp-pro-content h2 {
+        font-size: 50px; /* Scaled down for tablet/mobile */
+        line-height: 1;
+    }
+    .cp-pro-container {
+        padding: 0 24px;
+    }
+    .cp-pro-features {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

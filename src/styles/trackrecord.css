@@ -1,0 +1,116 @@
+#track-records {
+    background: #f4f2ee;
+    font-family: 'Barlow', sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    /* Create a deep 3D space */
+    perspective: 1500px; 
+}
+
+.track-inner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+    transform-style: preserve-3d;
+}
+
+/* ── Header ── */
+.track-header {
+    margin-bottom: 80px;
+    text-align: left;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+.header-bar {
+    width: 60px;
+    height: 3px;
+    background: #ff7b00;
+    margin-bottom: 15px;
+}
+
+.track-heading {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 700;
+    color: #111111;
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0;
+}
+.track-heading span { color: #ff7b00; }
+
+/* ── Stats Grid ── */
+.track-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    transform-style: preserve-3d;
+}
+
+.stat-item {
+    background: transparent;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+.stat-line {
+    height: 2px;
+    background: #ff7b00;
+    margin-bottom: 20px;
+    /* Will be animated via GSAP */
+}
+
+.stat-number {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+    margin-bottom: 5px;
+    transform: translateZ(30px); /* Numbers "pop" out */
+}
+
+.stat-count {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(40px, 4vw, 52px);
+    font-weight: 700;
+    color: #111111;
+    line-height: 0.9;
+    letter-spacing: -1px;
+}
+
+.stat-suffix {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #ff7b00;
+}
+
+.stat-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111111;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.stat-desc {
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.5;
+}
+
+@media (max-width: 992px) {
+    .track-stats { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+}
+
+@media (max-width: 520px) {
+    .track-stats { grid-template-columns: 1fr; }
+    #track-records { height: auto; padding: 100px 0; }
+}
