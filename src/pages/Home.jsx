@@ -1,5 +1,4 @@
-import React, { useLayoutEffect } from "react"; // Use useLayoutEffect for GSAP
-import gsap from "gsap";
+import React, { useLayoutEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Header } from "../components/header";
 import { About } from "../components/about";

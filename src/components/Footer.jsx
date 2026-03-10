@@ -11,17 +11,16 @@ export const Footer = () => {
             {/* Column 1: Company Info */}
             <div className="footer-col">
               <div className="footer-logo">
-               
                 <h2>Aber Al-Khayal General <br /> Contracting Company</h2>
               </div>
               <p className="company-bio">
                 We provide high-quality engineering and contracting solutions in Electrical, Mechanical, and Civil sectors across Saudi Arabia.
               </p>
               <div className="footer-socials">
-                <a href="#" className="social-link"><i className="fa fa-twitter"></i></a>
-                <a href="#" className="social-link"><i className="fa fa-facebook"></i></a>
-                <a href="#" className="social-link"><i className="fa fa-youtube"></i></a>
-                <a href="#" className="social-link"><i className="fa fa-linkedin"></i></a>
+                <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-link"><i className="fa fa-twitter"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-link"><i className="fa fa-facebook"></i></a>
+                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-link"><i className="fa fa-youtube"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="social-link"><i className="fa fa-linkedin"></i></a>
               </div>
             </div>
 
@@ -48,11 +47,11 @@ export const Footer = () => {
             <div className="footer-col">
               <h3>Quick Links</h3>
               <ul className="footer-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#services">Our Services</a></li>
-                <li><a href="#clients">Our Clients</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/services">Our Services</a></li>
+                <li><a href="/clients">Our Clients</a></li>
+                <li><a href="/contact">Contact</a></li>
               </ul>
             </div>
 
