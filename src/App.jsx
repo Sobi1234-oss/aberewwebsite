@@ -20,7 +20,7 @@ const App = () => {
   }, []);
 
   return (
-    <Router basename="/mywebsite">
+    <Router >
       <Navigation />
       <div className="page-content-wrapper">
         <Routes >
