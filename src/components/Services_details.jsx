@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback, memo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/servicesdetails.css";
@@ -73,13 +73,54 @@ const detailedServices = [
 ];
 
 /* ─────────────────────────────────────────────
-   RAF Horizontal Slider
+   Lazy Image with blur-up effect
 ───────────────────────────────────────────── */
-const AutoSliderGallery = React.memo(({ images, name }) => {
+const LazyImage = memo(({ src, alt, eager = false, className = "" }) => {
+  const imgRef = useRef(null);
+
+  const handleLoad = useCallback(() => {
+    if (imgRef.current) {
+      imgRef.current.style.filter = "blur(0px)";
+      imgRef.current.style.transform = "scale(1)";
+    }
+  }, []);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    if (img.complete && img.naturalWidth > 0) handleLoad();
+  }, [handleLoad]);
+
+  return (
+    <img
+      ref={imgRef}
+      src={src}
+      alt={alt}
+      className={className}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      fetchpriority={eager ? "high" : "low"}
+      style={{
+        filter: eager ? "blur(0px)" : "blur(6px)",
+        transform: eager ? "scale(1)" : "scale(1.02)",
+        transition: "filter 0.45s ease, transform 0.45s ease",
+      }}
+      onLoad={handleLoad}
+    />
+  );
+});
+
+/* ─────────────────────────────────────────────
+   RAF Horizontal Slider — memoized
+───────────────────────────────────────────── */
+const AutoSliderGallery = memo(({ images, name }) => {
   const trackRef  = useRef(null);
   const rafRef    = useRef(null);
   const posRef    = useRef(0);
   const pausedRef = useRef(false);
+
+  const handleMouseEnter = useCallback(() => { pausedRef.current = true;  }, []);
+  const handleMouseLeave = useCallback(() => { pausedRef.current = false; }, []);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -94,8 +135,15 @@ const AutoSliderGallery = React.memo(({ images, name }) => {
       rafRef.current = requestAnimationFrame(tick);
     };
 
-    const t = setTimeout(() => { rafRef.current = requestAnimationFrame(tick); }, 100);
-    return () => { clearTimeout(t); cancelAnimationFrame(rafRef.current); };
+    // Small delay so layout is settled before measuring scrollWidth
+    const t = setTimeout(() => {
+      rafRef.current = requestAnimationFrame(tick);
+    }, 120);
+
+    return () => {
+      clearTimeout(t);
+      cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   const loopImages = [...images, ...images];
@@ -109,17 +157,15 @@ const AutoSliderGallery = React.memo(({ images, name }) => {
       </div>
       <div
         className="hg-slider-container"
-        onMouseEnter={() => { pausedRef.current = true; }}
-        onMouseLeave={() => { pausedRef.current = false; }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="hg-track" ref={trackRef}>
           {loopImages.map((img, i) => (
             <div className="hg-card" key={i}>
-              <img
+              <LazyImage
                 src={img}
                 alt={`${name} ${(i % images.length) + 1}`}
-                loading="lazy"
-                decoding="async"
               />
               <div className="hg-card-overlay">
                 <span className="hg-card-num">
@@ -135,10 +181,9 @@ const AutoSliderGallery = React.memo(({ images, name }) => {
 });
 
 /* ─────────────────────────────────────────────
-   Service Block
-   Each block = sticky heading + body + slider
+   Service Block — memoized
 ───────────────────────────────────────────── */
-const ServiceBlock = React.memo(({ item, index }) => {
+const ServiceBlock = memo(({ item, index }) => {
   const blockRef   = useRef(null);
   const headingRef = useRef(null);
   const bodyRef    = useRef(null);
@@ -147,10 +192,9 @@ const ServiceBlock = React.memo(({ item, index }) => {
   useEffect(() => {
     if (window.innerWidth < 768) return;
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
 
-      /* ── PIN: heading sticks from when the block enters
-         the top of the viewport until the slider ends ── */
+      // Pin heading until slider bottom reaches viewport top
       ScrollTrigger.create({
         trigger: blockRef.current,
         start: "top top",
@@ -160,14 +204,11 @@ const ServiceBlock = React.memo(({ item, index }) => {
         pinSpacing: false,
       });
 
-      /* ── Animate body content in ── */
-      const image = bodyRef.current?.querySelector(".det-main-visual");
-      const text  = bodyRef.current?.querySelector(".det-info-text");
-
-      gsap.from(image, {
+      // Image slides in from right
+      gsap.from(bodyRef.current?.querySelector(".det-main-visual"), {
         x: 60,
         opacity: 0,
-        duration: 0.9,
+        duration: 0.8,
         ease: "power3.out",
         scrollTrigger: {
           trigger: bodyRef.current,
@@ -176,11 +217,12 @@ const ServiceBlock = React.memo(({ item, index }) => {
         },
       });
 
-      gsap.from(text, {
+      // Text slides in from left
+      gsap.from(bodyRef.current?.querySelector(".det-info-text"), {
         x: -60,
         opacity: 0,
-        duration: 0.9,
-        delay: 0.12,
+        duration: 0.8,
+        delay: 0.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: bodyRef.current,
@@ -199,8 +241,7 @@ const ServiceBlock = React.memo(({ item, index }) => {
       className={`det-block-wrapper ${index > 0 ? "det-block-separator" : ""}`}
       ref={blockRef}
     >
-
-      {/* ── STICKY HEADING ── */}
+      {/* STICKY HEADING */}
       <div className="det-sticky-heading" ref={headingRef}>
         <div className="det-sticky-inner">
           <div className="det-num-tag">{item.id}</div>
@@ -211,7 +252,7 @@ const ServiceBlock = React.memo(({ item, index }) => {
         </div>
       </div>
 
-      {/* ── BODY: text + image ── */}
+      {/* BODY */}
       <div className="det-body" ref={bodyRef}>
         <div className="det-inner-limit">
           <div className="det-layout-grid">
@@ -230,13 +271,11 @@ const ServiceBlock = React.memo(({ item, index }) => {
             </div>
 
             <div className="det-main-visual">
-              <img
+              <LazyImage
                 src={item.mainImage}
                 alt={item.name}
                 className="main-service-img"
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
-                fetchpriority={index === 0 ? "high" : "low"}
+                eager={index === 0}
               />
             </div>
 
@@ -244,7 +283,7 @@ const ServiceBlock = React.memo(({ item, index }) => {
         </div>
       </div>
 
-      {/* ── SLIDER (end-trigger for pin) ── */}
+      {/* SLIDER — end trigger for pin */}
       <div ref={sliderRef}>
         <AutoSliderGallery images={item.gallery} name={item.name} />
       </div>

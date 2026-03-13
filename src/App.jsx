@@ -9,6 +9,8 @@ import AboutPage from "./pages/About";
 import ServicesPage from "./pages/Services";
 import ClientsPage from "./pages/OurClients";
 import ContactPage from "./pages/Contact";
+import ScrollToTop from "./components/ScrollToTop";
+
 
 import "./App.css";
 
@@ -21,9 +23,11 @@ const App = () => {
 
   return (
     <Router >
+       <ScrollToTop />
       <Navigation />
       <div className="page-content-wrapper">
         <Routes >
+         
           <Route path="/" element={<Home data={landingPageData} />} />
           <Route path="/about" element={<AboutPage data={landingPageData.About} />} />
           <Route path="/services" element={<ServicesPage data={landingPageData.Services} />} />

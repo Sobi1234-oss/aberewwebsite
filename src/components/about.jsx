@@ -6,86 +6,119 @@ import "../styles/about.css";
 gsap.registerPlugin(ScrollTrigger);
 
 export const About = () => {
-  const containerRef = useRef(null);
-  const image1Ref = useRef(null);
-  const image2Ref = useRef(null);
-  // Removed headerRef from animations
+  const sectionRef  = useRef(null);
+  const headingRef  = useRef(null);
+  const imageColRef = useRef(null);
+  const contentRef  = useRef(null);
 
   useEffect(() => {
-    let mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
 
-    mm.add("(min-width: 993px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=2000",
-          scrub: 1.5,
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
-
-      // HEADING ANIMATION REMOVED FROM HERE
-
-      // Animate both images
-      tl.fromTo([image1Ref.current, image2Ref.current], 
-        { rotationY: -50, rotationX: 10, scale: 0.8, opacity: 0, z: -500 },
-        { rotationY: 0, rotationX: 0, scale: 1, opacity: 1, z: 0, duration: 4, stagger: 0.2 }
+      gsap.fromTo(headingRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+          },
+        }
       );
 
-      tl.fromTo(".ab-x-content > *", 
-        { y: 80, opacity: 0, filter: "blur(10px)" },
-        { y: 0, opacity: 1, filter: "blur(0px)", stagger: 0.4, duration: 3 },
-        "-=2"
+      gsap.fromTo(imageColRef.current,
+        { opacity: 0, x: -60, rotationY: -20, transformOrigin: "right center" },
+        {
+          opacity: 1, x: 0, rotationY: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: imageColRef.current,
+            start: "top 80%",
+          },
+        }
       );
-    });
 
-    mm.add("(max-width: 992px)", () => {
-      // Image and content animations remain for mobile, header animation removed
-      gsap.from([image1Ref.current, image2Ref.current], {
-        scale: 0.9, opacity: 0, duration: 1.2, stagger: 0.2,
-        scrollTrigger: { trigger: ".ab-x-image-box", start: "top 80%" }
-      });
+      gsap.fromTo(contentRef.current.children,
+        { opacity: 0, x: 50, y: 20 },
+        {
+          opacity: 1, x: 0, y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: contentRef.current,
+            start: "top 82%",
+          },
+        }
+      );
 
-      gsap.from(".ab-x-content > *", {
-        y: 30, opacity: 0, stagger: 0.2, duration: 1,
-        scrollTrigger: { trigger: ".ab-x-content", start: "top 80%" }
-      });
-    });
+    }, sectionRef);
 
-    return () => mm.revert();
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section className="ab-x-section" ref={containerRef}>
-      <div className="ab-x-container">
-        
-        {/* Main Header - Ref removed, now stays static */}
-        <div className="ab-x-header">
-          <span className="ab-x-arabic-sub">من نحن — قصة التميز والريادة</span>
-          <h1 className="ab-x-title">
-            Engineering <span>Beyond</span> <br />Boundaries
-          </h1>
+    <section id="about-unique-section" ref={sectionRef}>
+      <div className="ab-main-container">
+
+        <div ref={headingRef}>
+          <span className="ab-tagline">من نحن — About Us</span>
+          <h2 className="ab-main-heading">
+            Engineering <span>Beyond</span><br />Boundaries
+          </h2>
         </div>
 
-        <div className="ab-x-hero-grid">
-          <div className="ab-x-image-box">
-            <img ref={image1Ref} src="./img/about2.jpg" alt="Engineering Excellence" className="ab-img-main" />
-            <img ref={image2Ref} src="./img/services/service3.1.jpg" alt="Construction Site" className="ab-img-sub" />
+        <div className="ab-two-col">
+
+          {/* LEFT — overlapping images */}
+          <div className="ab-image-col" ref={imageColRef}>
+            <div className="ab-img-main-wrap">
+              <img src="./img/about2.jpg" alt="Aber Al-Khayal Engineering" />
+            </div>
+            <div className="ab-img-sub-wrap">
+              <img src="./img/services/service3.1.jpg" alt="Construction Site" />
+            </div>
           </div>
 
-          <div className="ab-x-content">
-            <h2>Building the Future of the <span>Kingdom</span></h2>
-            <div className="ab-x-body">
-              <p>Founded in 2010, Aber Al-Khayal has evolved from a specialized local firm into a powerhouse of Saudi Arabia’s construction landscape, mastering the complexities of Electrical, Mechanical, and Civil Engineering. With over 15 years of operational excellence, we have built a reputation for transforming ambitious blueprints into high-performance infrastructures. Our multi-disciplinary approach ensures that every project, from industrial power plants to luxury commercial hubs, is executed with surgical precision.</p>
-              <p>Our journey is linked to <strong>Saudi Vision 2030</strong>...</p>
-              <p className="ab-x-arabic-quote">نحن نلتزم بأعلى معايير الجودة والسلامة...</p>
+          {/* RIGHT — trimmed content, matches image height */}
+          <div className="ab-content-col" ref={contentRef}>
+
+            <h3>Saudi Arabia's Trusted <span>Engineering Partner</span></h3>
+
+            <div className="ab-divider"></div>
+
+            <p>
+              Founded in 2010, Aber Al-Khayal has grown into a fully integrated contracting
+              powerhouse — delivering Civil, Mechanical, and Electrical engineering projects
+              across the Kingdom with precision, safety, and zero compromise for over 15 years.
+            </p>
+
+            <p>
+              From high-voltage power networks and industrial HVAC systems to large-scale civil
+              structures, we execute Saudi Arabia's most demanding infrastructure projects aligned
+              with <strong>Vision 2030</strong> — on time, every time.
+            </p>
+
+            <div className="ab-services-tags">
+              <span className="ab-tag">Civil Construction</span>
+              <span className="ab-tag">Mechanical Engineering</span>
+              <span className="ab-tag">Electrical Systems</span>
+              <span className="ab-tag">MEP Integration</span>
+              <span className="ab-tag">Vision 2030</span>
+              <span className="ab-tag">Industrial Works</span>
             </div>
-            <div className="ab-x-footer">
-              <div className="ab-x-line"></div>
-              <span className="ab-x-sig">رؤية وطنية بأبعاد عالمية — ٢٠٣٠</span>
+
+            <p className="ab-arabic-quote">
+              نحن نلتزم بأعلى معايير الجودة والسلامة — لأن التميز أساس مستقبل المملكة.
+            </p>
+
+            <div className="ab-footer-sig">
+              <div className="ab-sig-line"></div>
+              <span className="ab-sig-text">رؤية وطنية بأبعاد عالمية — ٢٠٣٠</span>
             </div>
+
           </div>
         </div>
       </div>

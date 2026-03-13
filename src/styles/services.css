@@ -1,31 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@400;600&display=swap');
 
-/* ══════════════════════════════════════════════
-   SERVICES SECTION — pinned scroll
-══════════════════════════════════════════════ */
 #services-section {
     background: #f4f2ee;
     width: 100%;
-    height: 100vh;
-    min-height: 600px;
     position: relative;
     overflow: hidden;
+    padding-bottom: 80px;
 }
 
 .services-inner {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1150px;
     margin: 0 auto;
     padding: 48px 48px 0;
-    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-/* ── Heading ──────────────────────────────── */
+/* ── Heading ── */
 .srv-header-group {
-    flex-shrink: 0;
-    margin-bottom: 32px;
+    margin-bottom: 48px;
 }
 
 .srv-arabic-label {
@@ -47,44 +41,38 @@
 }
 .srv-main-title span { color: #ff7b00; }
 
-/* ── Stack wrapper fills remaining viewport ── */
-.services-stack-wrapper {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-}
-
-/* ── Each card is absolutely stacked ─────── */
+/* ── Each service block ── */
 .service-item-slow {
-    position: absolute;
-    inset: 0;
-    visibility: hidden;
     display: grid;
     grid-template-columns: 1fr 1.1fr 0.65fr;
     gap: 32px;
     align-items: stretch;
-    height: 100%;
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
 }
 
-/* Hide mobile horizontal slider on desktop */
-.srv-col-slider--mobile {
-    display: none;
+.service-item-slow.in-view {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* ══════════════════════════════════════════════
-   COL 1 — MAIN IMAGE
-══════════════════════════════════════════════ */
+/* Hide mobile slider on desktop */
+.srv-col-slider--mobile { display: none; }
+
+/* ══ COL 1 — IMAGE ══ */
 .srv-col-image {
     position: relative;
     display: flex;
     align-items: stretch;
+    height: 480px;
 }
 
 .srv-img-frame {
     position: relative;
     width: 100%;
-    max-height: 520px;
+    height: 100%;
     border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 24px 56px rgba(0,0,0,0.13);
@@ -95,6 +83,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: filter 0.4s ease;
+}
+
+.srv-img-frame img.loading {
+    filter: blur(8px);
 }
 
 .srv-number-overlay {
@@ -104,7 +97,7 @@
     font-family: 'Oswald', sans-serif;
     font-size: 120px;
     font-weight: 700;
-    color: rgba(255, 123, 0, 0.06);
+    color: rgba(255,123,0,0.06);
     line-height: 1;
     pointer-events: none;
     z-index: 2;
@@ -125,14 +118,22 @@
     z-index: 3;
 }
 
-/* ══════════════════════════════════════════════
-   COL 2 — CONTENT
-══════════════════════════════════════════════ */
+/* ══ COL 2 — CONTENT ══ */
 .srv-col-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 10px 0 20px;
+    height: 480px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.65s ease 0.15s, transform 0.65s ease 0.15s;
+}
+
+.service-item-slow.in-view .srv-col-content {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .srv-arabic-sub {
@@ -161,6 +162,7 @@
     background: #ff7b00;
     margin-bottom: 18px;
     border-radius: 2px;
+    flex-shrink: 0;
 }
 
 .srv-desc {
@@ -201,13 +203,16 @@
     align-items: center;
     gap: 12px;
     margin-top: auto;
+    flex-shrink: 0;
 }
+
 .srv-sig-line {
     width: 35px;
     height: 1px;
     background: #ff7b00;
     flex-shrink: 0;
 }
+
 .srv-sig-text {
     font-family: 'Oswald', sans-serif;
     font-size: 11px;
@@ -216,19 +221,28 @@
     letter-spacing: 2px;
 }
 
-/* ══════════════════════════════════════════════
-   COL 3 — VERTICAL AUTO-SLIDER (desktop)
-══════════════════════════════════════════════ */
+/* ══ COL 3 — VERTICAL SLIDER ══ */
 .srv-col-slider {
     display: flex;
     align-items: stretch;
+    height: 480px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(70px);
+    transition: opacity 0.65s ease 0.28s, transform 0.65s ease 0.28s;
+}
+
+.service-item-slow.in-view .srv-col-slider {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .vsld-root {
     width: 100%;
     display: flex;
     flex-direction: column;
-    height: 95%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .vsld-label {
@@ -258,15 +272,15 @@
     border-radius: 10px;
     position: relative;
     min-height: 0;
+    max-height: 100%;
 }
 
 .vsld-window::before,
 .vsld-window::after {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    height: 60px;
+    left: 0; right: 0;
+    height: 50px;
     z-index: 2;
     pointer-events: none;
 }
@@ -282,14 +296,12 @@
 .vsld-track {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     animation: vsldScrollUp 18s linear infinite;
     padding: 6px 0;
 }
 
-.vsld-track:hover {
-    animation-play-state: paused;
-}
+.vsld-track:hover { animation-play-state: paused; }
 
 @keyframes vsldScrollUp {
     0%   { transform: translateY(0); }
@@ -299,7 +311,7 @@
 .vsld-card {
     flex-shrink: 0;
     width: 100%;
-    height: 140px;
+    height: 130px;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
@@ -311,12 +323,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, filter 0.4s ease;
 }
 
-.vsld-card:hover img {
-    transform: scale(1.07);
-}
+.vsld-card img.loading { filter: blur(6px); }
+.vsld-card:hover img  { transform: scale(1.07); }
 
 .vsld-overlay {
     position: absolute;
@@ -329,9 +340,7 @@
     transition: opacity 0.3s ease;
 }
 
-.vsld-card:hover .vsld-overlay {
-    opacity: 1;
-}
+.vsld-card:hover .vsld-overlay { opacity: 1; }
 
 .vsld-num {
     font-family: 'Oswald', sans-serif;
@@ -340,16 +349,10 @@
     color: #fff;
 }
 
-/* ══════════════════════════════════════════════
-   HORIZONTAL AUTO-SLIDER (mobile only)
-══════════════════════════════════════════════ */
-.hsld-root {
-    width: 100%;
-}
+/* ══ HORIZONTAL SLIDER (mobile only) ══ */
+.hsld-root { width: 100%; }
 
-.hsld-label {
-    margin-bottom: 12px;
-}
+.hsld-label { margin-bottom: 12px; }
 
 .hsld-label-txt {
     font-family: 'Oswald', sans-serif;
@@ -367,7 +370,6 @@
     background: rgba(0,0,0,0.08);
 }
 
-/* Horizontal scroll window */
 .hsld-window {
     width: 100%;
     overflow: hidden;
@@ -375,13 +377,11 @@
     position: relative;
 }
 
-/* Fade masks left + right */
 .hsld-window::before,
 .hsld-window::after {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 0; bottom: 0;
     width: 40px;
     z-index: 2;
     pointer-events: none;
@@ -395,26 +395,21 @@
     background: linear-gradient(to left, #f4f2ee, transparent);
 }
 
-/* Horizontal scrolling track */
 .hsld-track {
     display: flex;
-    flex-direction: row;
     gap: 12px;
     padding: 6px 0;
     animation: hsldScrollLeft 18s linear infinite;
     width: max-content;
 }
 
-.hsld-track:hover {
-    animation-play-state: paused;
-}
+.hsld-track:hover { animation-play-state: paused; }
 
 @keyframes hsldScrollLeft {
     0%   { transform: translateX(0); }
     100% { transform: translateX(calc(-33.333% - 4px)); }
 }
 
-/* Individual card in horizontal slider */
 .hsld-card {
     flex-shrink: 0;
     width: 200px;
@@ -433,9 +428,7 @@
     transition: transform 0.5s ease;
 }
 
-.hsld-card:hover img {
-    transform: scale(1.07);
-}
+.hsld-card:hover img  { transform: scale(1.07); }
 
 .hsld-overlay {
     position: absolute;
@@ -448,9 +441,7 @@
     transition: opacity 0.3s ease;
 }
 
-.hsld-card:hover .hsld-overlay {
-    opacity: 1;
-}
+.hsld-card:hover .hsld-overlay { opacity: 1; }
 
 .hsld-num {
     font-family: 'Oswald', sans-serif;
@@ -459,89 +450,46 @@
     color: #fff;
 }
 
-/* ══════════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════════ */
-
-/* Tablet — stack image on top, content + slider side by side */
+/* ══ RESPONSIVE ══ */
 @media (max-width: 1024px) {
-    .services-inner {
-        padding: 36px 32px 0;
-    }
+    .services-inner { padding: 36px 32px 0; }
 
     .service-item-slow {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto 1fr;
         grid-template-areas:
-            "img   img"
+            "img     img"
             "content slider";
-        height: auto;
         align-items: start;
+        height: auto;
     }
 
-    .srv-col-image  { grid-area: img; height: 280px; }
-    .srv-col-content { grid-area: content; }
-    .srv-col-slider--desktop { grid-area: slider; }
-
+    .srv-col-image   { grid-area: img;     height: 280px; }
+    .srv-col-content { grid-area: content; height: auto; overflow: visible; }
+    .srv-col-slider--desktop { grid-area: slider; height: 300px; }
     .vsld-card { height: 110px; }
-
-    .services-stack-wrapper {
-        height: calc(100vh - 160px);
-    }
 }
 
-/* ══════════════════════════════════════════════
-   MOBILE — single column, custom order:
-   1. Heading (already above stack)
-   2. Main Image
-   3. Description / Content
-   4. Horizontal Slider
-══════════════════════════════════════════════ */
 @media (max-width: 768px) {
-    #services-section {
-        height: auto;
-        min-height: 100vh;
-        overflow: visible;
-    }
+    .services-inner { padding: 32px 20px 40px; }
+    .srv-header-group { margin-bottom: 24px; }
 
-    .services-inner {
-        padding: 32px 20px 40px;
-        height: auto;
-    }
-
-    .srv-header-group {
-        margin-bottom: 24px;
-    }
-
-    .services-stack-wrapper {
-        position: relative;
-        height: auto;
-        flex: unset;
-    }
-
-    /* Each card: static flow, flex column */
     .service-item-slow {
-        position: relative;
-        inset: unset;
         display: flex;
         flex-direction: column;
         gap: 20px;
-        /* Override GSAP visibility on mobile */
-        visibility: visible !important;
-        opacity: 1 !important;
         margin-bottom: 60px;
-        /* Grid overrides not needed on mobile */
-        grid-template-columns: unset;
-        grid-template-areas: unset;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        height: auto;
     }
 
-    /* Divider between services */
     .service-item-slow + .service-item-slow {
         border-top: 1px solid rgba(0,0,0,0.07);
         padding-top: 40px;
     }
 
-    /* ORDER: 1 = image, 2 = content, 3 = horizontal slider */
     .srv-col-image {
         order: 1;
         height: 240px;
@@ -551,43 +499,21 @@
     .srv-col-content {
         order: 2;
         padding: 0;
+        height: auto;
+        overflow: visible;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 
-    /* Hide desktop vertical slider on mobile */
-    .srv-col-slider--desktop {
-        display: none !important;
-    }
-
-    /* Show mobile horizontal slider after content */
-    .srv-col-slider--mobile {
-        display: block;
-        order: 3;
-        width: 100%;
-    }
-
-    .srv-img-frame {
-        max-height: unset;
-        height: 100%;
-        border-radius: 16px;
-    }
+    .srv-col-slider--desktop { display: none !important; }
+    .srv-col-slider--mobile  { display: block; order: 3; width: 100%; }
+    .srv-img-frame { max-height: unset; height: 100%; border-radius: 16px; }
 }
 
 @media (max-width: 480px) {
-    .srv-main-title {
-        font-size: 32px;
-    }
-
-    .srv-col-image {
-        height: 200px;
-    }
-
-    .srv-tag {
-        font-size: 10px;
-        padding: 4px 10px;
-    }
-
-    .hsld-card {
-        width: 160px;
-        height: 120px;
-    }
+    .srv-main-title { font-size: 32px; }
+    .srv-col-image  { height: 200px; }
+    .srv-tag        { font-size: 10px; padding: 4px 10px; }
+    .hsld-card      { width: 160px; height: 120px; }
 }

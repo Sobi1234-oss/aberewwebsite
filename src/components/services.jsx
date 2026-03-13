@@ -1,10 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useRef, useCallback, memo } from "react";
 import "../styles/services.css";
-
-gsap.registerPlugin(ScrollTrigger);
-gsap.config({ force3D: true });
 
 const servicesData = [
   {
@@ -60,24 +55,94 @@ const servicesData = [
   },
 ];
 
-/* ─────────────────────────────────────────────
-   Vertical Auto-Sliding Gallery (desktop 3rd column)
-───────────────────────────────────────────── */
-const VerticalSlider = ({ images, name }) => {
+/* ── Fast Image: eager for first, lazy + blur-up for rest ── */
+const FastImg = memo(({ src, alt, eager = false }) => {
+  const imgRef = useRef(null);
+
+  const handleLoad = useCallback(() => {
+    if (imgRef.current) {
+      imgRef.current.style.filter = "blur(0px)";
+      imgRef.current.style.transform = "scale(1)";
+    }
+  }, []);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    if (img.complete && img.naturalWidth > 0) handleLoad();
+  }, [handleLoad]);
+
+  return (
+    <img
+      ref={imgRef}
+      src={src}
+      alt={alt}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      fetchpriority={eager ? "high" : "low"}
+      onLoad={handleLoad}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        display: "block",
+        filter: eager ? "blur(0px)" : "blur(5px)",
+        transform: eager ? "scale(1)" : "scale(1.03)",
+        transition: "filter 0.4s ease, transform 0.4s ease",
+        willChange: "filter, transform",
+      }}
+    />
+  );
+});
+
+/* ── Vertical Slider — RAF based, memoized ── */
+const VerticalSlider = memo(({ images, name }) => {
+  const trackRef  = useRef(null);
+  const rafRef    = useRef(null);
+  const posRef    = useRef(0);
+  const pausedRef = useRef(false);
+
+  const onEnter = useCallback(() => { pausedRef.current = true;  }, []);
+  const onLeave = useCallback(() => { pausedRef.current = false; }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const tick = () => {
+      if (!pausedRef.current) {
+        const halfH = track.scrollHeight / 2;
+        posRef.current = (posRef.current + 0.4) % halfH;
+        track.style.transform = `translate3d(0,-${posRef.current}px,0)`;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    const t = setTimeout(() => { rafRef.current = requestAnimationFrame(tick); }, 100);
+    return () => { clearTimeout(t); cancelAnimationFrame(rafRef.current); };
+  }, []);
+
   const loopImages = [...images, ...images, ...images];
+
   return (
     <div className="vsld-root">
       <div className="vsld-label">
         <span className="vsld-label-txt">PROJECT SHOWCASE</span>
         <div className="vsld-label-line" />
       </div>
-      <div className="vsld-window">
-        <div className="vsld-track">
+      <div
+        className="vsld-window"
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+      >
+        <div className="vsld-track" ref={trackRef}>
           {loopImages.map((img, i) => (
             <div className="vsld-card" key={i}>
-              <img src={img} alt={`${name} ${(i % images.length) + 1}`} loading="lazy" />
+              <FastImg src={img} alt={`${name} ${(i % images.length) + 1}`} />
               <div className="vsld-overlay">
-                <span className="vsld-num">{String((i % images.length) + 1).padStart(2, "0")}</span>
+                <span className="vsld-num">
+                  {String((i % images.length) + 1).padStart(2, "0")}
+                </span>
               </div>
             </div>
           ))}
@@ -85,26 +150,56 @@ const VerticalSlider = ({ images, name }) => {
       </div>
     </div>
   );
-};
+});
 
-/* ─────────────────────────────────────────────
-   Horizontal Auto-Sliding Gallery (mobile only)
-───────────────────────────────────────────── */
-const HorizontalSlider = ({ images, name }) => {
+/* ── Horizontal Slider — RAF based, memoized ── */
+const HorizontalSlider = memo(({ images, name }) => {
+  const trackRef  = useRef(null);
+  const rafRef    = useRef(null);
+  const posRef    = useRef(0);
+  const pausedRef = useRef(false);
+
+  const onEnter = useCallback(() => { pausedRef.current = true;  }, []);
+  const onLeave = useCallback(() => { pausedRef.current = false; }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const tick = () => {
+      if (!pausedRef.current) {
+        const halfW = track.scrollWidth / 2;
+        posRef.current = (posRef.current + 0.5) % halfW;
+        track.style.transform = `translate3d(-${posRef.current}px,0,0)`;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    const t = setTimeout(() => { rafRef.current = requestAnimationFrame(tick); }, 100);
+    return () => { clearTimeout(t); cancelAnimationFrame(rafRef.current); };
+  }, []);
+
   const loopImages = [...images, ...images, ...images];
+
   return (
     <div className="hsld-root">
       <div className="hsld-label">
         <span className="hsld-label-txt">PROJECT SHOWCASE</span>
         <div className="hsld-label-line" />
       </div>
-      <div className="hsld-window">
-        <div className="hsld-track">
+      <div
+        className="hsld-window"
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+      >
+        <div className="hsld-track" ref={trackRef}>
           {loopImages.map((img, i) => (
             <div className="hsld-card" key={i}>
-              <img src={img} alt={`${name} ${(i % images.length) + 1}`} loading="lazy" />
+              <FastImg src={img} alt={`${name} ${(i % images.length) + 1}`} />
               <div className="hsld-overlay">
-                <span className="hsld-num">{String((i % images.length) + 1).padStart(2, "0")}</span>
+                <span className="hsld-num">
+                  {String((i % images.length) + 1).padStart(2, "0")}
+                </span>
               </div>
             </div>
           ))}
@@ -112,150 +207,96 @@ const HorizontalSlider = ({ images, name }) => {
       </div>
     </div>
   );
-};
+});
 
-/* ─────────────────────────────────────────────
-   Main Services Section
-───────────────────────────────────────────── */
-export const Services = () => {
-  const containerRef = useRef(null);
+/* ── Single Service Card — memoized ── */
+const ServiceCard = memo(({ service, index }) => {
+  const cardRef = useRef(null);
 
   useEffect(() => {
-    const cards = gsap.utils.toArray(".service-item-slow");
-    const isMobile = window.innerWidth < 768;
+    const el = cardRef.current;
+    if (!el) return;
 
-    if (isMobile) {
-      cards.forEach((card) => {
-        gsap.set(card, { autoAlpha: 1 });
-      });
-      return;
-    }
-
-    gsap.set(cards, { autoAlpha: 0 });
-
-    let ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=3600",
-          scrub: 1,
-          pin: true,
-          anticipatePin: 0,
-          pinSpacing: true,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      tl.from(".srv-header-group", {
-        y: 20,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-      });
-
-      cards.forEach((card, i) => {
-        const col1 = card.querySelector(".srv-col-image");
-        const col2 = card.querySelector(".srv-col-content");
-        const col3 = card.querySelector(".srv-col-slider");
-
-        tl.to(card, { autoAlpha: 1, duration: 0.1 }, "+=0.1");
-
-        tl.fromTo(
-          col1,
-          { x: -50, opacity: 0 },
-          { x: 0, opacity: 1, duration: 3, ease: "power2.out" },
-          "<"
-        );
-
-        tl.fromTo(
-          col2,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 3, ease: "power2.out" },
-          "<0.2"
-        );
-
-        tl.fromTo(
-          col3,
-          { x: 50, opacity: 0 },
-          { x: 0, opacity: 1, duration: 3, ease: "power2.out" },
-          "<0.2"
-        );
-
-        tl.to({}, { duration: 3 });
-
-        if (i !== cards.length - 1) {
-          tl.to(card, {
-            autoAlpha: 0,
-            y: -25,
-            duration: 2,
-            ease: "power2.in",
-          });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("in-view");
+          observer.unobserve(el);
         }
-      });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
 
-    }, containerRef);
-
-    return () => ctx.revert();
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="services-section" ref={containerRef}>
-      <div className="services-inner">
+    <div className="service-item-slow" ref={cardRef}>
 
-        {/* Heading */}
-        <div className="srv-header-group">
-          <span className="srv-arabic-label">خدماتنا — دقة في التنفيذ</span>
-          <h2 className="srv-main-title">
-            Our <span>Specialized</span> Services
-          </h2>
+      {/* COL 1 — Image */}
+      <div className="srv-col-image">
+        <div className="srv-img-frame">
+          <div className="srv-number-overlay">{service.id}</div>
+          <FastImg
+            src={service.image}
+            alt={service.name}
+            eager={index === 0}
+          />
+          <div className="srv-img-badge">{service.id}</div>
         </div>
+      </div>
 
-        {/* Cards Stack */}
-        <div className="services-stack-wrapper">
-          {servicesData.map((service, index) => (
-            <div className="service-item-slow" key={index}>
-
-              {/* COL 1 — Main Image */}
-              <div className="srv-col-image">
-                <div className="srv-img-frame">
-                  <div className="srv-number-overlay">{service.id}</div>
-                  <img src={service.image} alt={service.name} />
-                  <div className="srv-img-badge">{service.id}</div>
-                </div>
-              </div>
-
-              {/* COL 2 — Content */}
-              <div className="srv-col-content">
-                <span className="srv-arabic-sub">{service.arabic}</span>
-                <h3 className="srv-title">{service.name}</h3>
-                <div className="srv-accent-bar" />
-                <p className="srv-desc">{service.text}</p>
-                <p className="srv-desc srv-desc-extra">{service.extraText}</p>
-                <div className="srv-tags">
-                  {service.tags.map((tag, t) => (
-                    <span key={t} className="srv-tag">#{tag}</span>
-                  ))}
-                </div>
-                <div className="srv-signature">
-                  <div className="srv-sig-line" />
-                  <span className="srv-sig-text">EXCELLENCE — ٢٠٣٠</span>
-                </div>
-              </div>
-
-              {/* COL 3 — Vertical Slider (desktop) / Horizontal Slider (mobile) */}
-              <div className="srv-col-slider srv-col-slider--desktop">
-                <VerticalSlider images={service.gallery} name={service.name} />
-              </div>
-              <div className="srv-col-slider--mobile">
-                <HorizontalSlider images={service.gallery} name={service.name} />
-              </div>
-
-            </div>
+      {/* COL 2 — Content */}
+      <div className="srv-col-content">
+        <span className="srv-arabic-sub">{service.arabic}</span>
+        <h3 className="srv-title">{service.name}</h3>
+        <div className="srv-accent-bar" />
+        <p className="srv-desc">{service.text}</p>
+        <p className="srv-desc srv-desc-extra">{service.extraText}</p>
+        <div className="srv-tags">
+          {service.tags.map((tag, t) => (
+            <span key={t} className="srv-tag">#{tag}</span>
           ))}
         </div>
-
+        <div className="srv-signature">
+          <div className="srv-sig-line" />
+          <span className="srv-sig-text">EXCELLENCE — ٢٠٣٠</span>
+        </div>
       </div>
-    </section>
+
+      {/* COL 3 — Vertical Slider desktop */}
+      <div className="srv-col-slider srv-col-slider--desktop">
+        <VerticalSlider images={service.gallery} name={service.name} />
+      </div>
+
+      {/* Mobile horizontal slider */}
+      <div className="srv-col-slider--mobile">
+        <HorizontalSlider images={service.gallery} name={service.name} />
+      </div>
+
+    </div>
   );
-};
+});
+
+/* ── Main Component ── */
+export const Services = () => (
+  <section id="services-section">
+    <div className="services-inner">
+
+      <div className="srv-header-group">
+        <span className="srv-arabic-label">خدماتنا — دقة في التنفيذ</span>
+        <h2 className="srv-main-title">
+          Our <span>Specialized</span> Services
+        </h2>
+      </div>
+
+      <div className="services-stack-wrapper">
+        {servicesData.map((service, index) => (
+          <ServiceCard key={service.id} service={service} index={index} />
+        ))}
+      </div>
+
+    </div>
+  </section>
+);

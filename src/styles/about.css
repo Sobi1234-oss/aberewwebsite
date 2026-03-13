@@ -1,199 +1,303 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@400;600&display=swap');
 
-/* Section Wrapper */
-.ab-x-section {
+#about-unique-section {
     background: #f4f2ee;
-    width: 100%;
     min-height: 100vh;
-    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     position: relative;
     font-family: 'Barlow', sans-serif;
+    padding-top: 20px;
 }
 
-.ab-x-container {
+.ab-main-container {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1150px;
     margin: 0 auto;
-    padding: 100px 40px;
+    padding: 80px 48px;
 }
 
-/* Header Styling */
-.ab-x-header {
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-    margin-bottom: 50px; /* Space between header and the animated grid */
-    position: relative;
-    z-index: 10;
-}
-
-/* Ensure the section starts at the very top for clean pinning */
-
-
-.ab-x-arabic-sub {
-    font-family: 'Noto Sans Arabic', sans-serif;
+/* ── Tagline ── */
+.ab-tagline {
+    font-size: 15px;
     color: #ff7b00;
     font-weight: 600;
-    font-size: 18px;
-    display: block;
-    margin-bottom: 10px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
 }
 
-.ab-x-title {
+/* ── Big Heading ── */
+.ab-main-heading {
     font-family: 'Oswald', sans-serif;
-    font-size: clamp(40px, 8vw, 76px);
-    line-height: 1;
+    font-size: clamp(48px, 7vw, 72px);
+    font-weight: 700;
     text-transform: uppercase;
     color: #111;
-    margin: 0;
+    line-height: 1;
+    margin: 0 0 50px;
 }
 
-.ab-x-title span { color: #ff7b00; }
+.ab-main-heading span { color: #ff7b00; }
 
-/* Grid Layout */
-.ab-x-hero-grid {
+/* ── DESKTOP: Two Column Layout ── */
+.ab-two-col {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 80px;
-    align-items: center;
-    transform-style: preserve-3d;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: stretch;
 }
 
-/* ─── IMAGE BOX & OVERLAP EFFECT ─── */
-.ab-x-image-box {
-    width: 110%;
-    perspective: 1000px;
-    position: relative; /* Needed for positioning the sub image */
-    height: 550px; /* Fixed height to contain positioned elements */
+/* ── LEFT: Images ── */
+.ab-image-col {
+    position: relative;
+    height: 520px;
 }
 
-.ab-x-image-box img {
-    width: 110%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.15);
-    display: block;
-    position: absolute; /* Stack them */
-}
-
-/* Primary Image - Larger, positioned behind */
-.ab-img-main {
-    width: 85% !important;
-    height: 90% !important;
+.ab-img-main-wrap {
+    position: absolute;
     top: 0;
     left: 0;
+    width: 82%;
+    height: 88%;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.14);
+    border-top: 3px solid #ff7b00;
     z-index: 1;
 }
 
-/* Secondary Image - Smaller, positioned in front with border */
-.ab-img-sub {
-    width: 50% !important;
-    height: 50% !important;
+.ab-img-sub-wrap {
+    position: absolute;
     bottom: 0;
     right: 0;
+    width: 52%;
+    height: 52%;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+    border-top: 3px solid #ff7b00;
     z-index: 2;
-    border: 5px solid #f4f2ee; /* Creates a clean gap effect */
+    border: 4px solid #f4f2ee;
 }
-/* ─── END IMAGE BOX ─── */
 
-/* Content Area */
-.ab-x-content h2 {
+.ab-img-main-wrap img,
+.ab-img-sub-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── RIGHT: Content ── */
+.ab-content-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
+    padding-top: 10px;
+}
+
+.ab-content-col h3 {
     font-family: 'Oswald', sans-serif;
-    font-size: clamp(28px, 4vw, 42px);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 600;
     text-transform: uppercase;
-    margin-bottom: 25px;
-    line-height: 1.2;
     color: #111;
+    line-height: 1.2;
+    margin: 0;
 }
 
-.ab-x-content h2 span { color: #ff7b00; }
+.ab-content-col h3 span { color: #ff7b00; }
 
-.ab-x-body p {
-    font-size: 16px;
-    line-height: 1.8;
+.ab-content-col p {
+    font-size: 15.5px;
+    line-height: 1.85;
     color: #444;
-    margin-bottom: 20px;
+    margin: 0;
 }
 
-.ab-x-arabic-quote {
+/* ── Divider ── */
+.ab-divider {
+    width: 50px;
+    height: 2px;
+    background: #ff7b00;
+}
+
+/* ── Service Tags ── */
+.ab-services-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ab-tag {
+    background: #fff;
+    border: 1px solid #e0ddd8;
+    border-left: 3px solid #ff7b00;
+    padding: 8px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.ab-tag:hover {
+    background: #ff7b00;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ── Arabic Quote ── */
+.ab-arabic-quote {
     font-family: 'Noto Sans Arabic', sans-serif;
     font-weight: 600;
     color: #111;
-    border-left: 4px solid #ff7b00;
-    padding-left: 20px;
-    font-size: 17px;
-    margin-top: 30px;
+    border-left: 3px solid #ff7b00;
+    padding-left: 18px;
+    font-size: 15px;
+    line-height: 2.1;
+    margin: 0;
 }
 
-/* Signature */
-.ab-x-footer {
+/* ── Footer Sig ── */
+.ab-footer-sig {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-top: 40px;
+    gap: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.08);
 }
 
-.ab-x-line { width: 50px; height: 2px; background: #ff7b00; }
-.ab-x-sig { 
-    font-family: 'Noto Sans Arabic', sans-serif; 
-    font-weight: 600; 
-    font-size: 14px; 
+.ab-sig-line { width: 40px; height: 2px; background: #ff7b00; flex-shrink: 0; }
+.ab-sig-text {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
     color: #111;
 }
 
-/* ─── MOBILE RESPONSIVE (992px and below) ─── */
+/* ══════════════════════════════════════
+   MOBILE (992px and below)
+   Order: Heading → Main Image → Content → Sub Image
+══════════════════════════════════════ */
 @media (max-width: 992px) {
-    .ab-x-container {
-        padding: 60px 24px;
+    #about-unique-section {
+        align-items: flex-start;
+        padding-top: 0;
+    }
+
+    .ab-main-container {
+        padding: 60px 24px 60px;
+    }
+
+    .ab-main-heading {
+        font-size: 42px;
+        margin-bottom: 30px;
         text-align: center;
     }
 
-    .ab-x-header {
+    .ab-tagline {
+        display: block;
+        text-align: center;
+    }
+
+    /* Stack into single column */
+    .ab-two-col {
         display: flex;
         flex-direction: column;
+        gap: 0;
+    }
+
+    /* ── 1. Main image first ── */
+    .ab-image-col {
+        order: 1;
+        height: 260px;
+        position: relative;
+        margin-bottom: 32px;
+    }
+
+    /* On mobile main image fills full width */
+    .ab-img-main-wrap {
+        position: relative;
+        width: 100%;
+        height: 260px;
+        top: unset; left: unset;
+    }
+
+    /* Hide sub image in image col on mobile — shown separately below content */
+    .ab-img-sub-wrap {
+        display: none;
+    }
+
+    /* ── 2. Content second ── */
+    .ab-content-col {
+        order: 2;
+        padding-top: 0;
+        gap: 18px;
+        margin-bottom: 32px;
+        text-align: center;
         align-items: center;
+    }
+
+    .ab-content-col h3 {
+        font-size: 24px;
         text-align: center;
     }
 
-    .ab-x-hero-grid {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
-
-    /* Stack images vertically on mobile */
-    .ab-x-image-box {
-        height: auto;
-        min-height: 400px;
-    }
-    
-    .ab-x-image-box img {
-        position: relative;
-        width: 100% !important;
-        height: 300px !important;
-        margin-bottom: 20px;
-    }
-    
-    .ab-img-sub {
-        width: 100% !important;
-        border: none;
-    }
-
-    .ab-x-arabic-quote {
+    .ab-arabic-quote {
         border-left: none;
         border-top: 2px solid #ff7b00;
         padding-left: 0;
-        padding-top: 20px;
-        display: inline-block;
+        padding-top: 14px;
+        text-align: center;
+        display: block;
     }
 
-    .ab-x-footer {
+    .ab-footer-sig {
         justify-content: center;
+    }
+
+    .ab-services-tags {
+        justify-content: center;
+    }
+
+    /* ── 3. Sub image last — shown as standalone block ── */
+    .ab-mobile-sub-img {
+        order: 3;
+        width: 100%;
+        height: 220px;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+        border-top: 3px solid #ff7b00;
+        display: block; /* shown on mobile */
+    }
+
+    .ab-mobile-sub-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
 }
 
-/* Extra Small Devices */
+/* Desktop: hide the mobile-only sub image */
+@media (min-width: 993px) {
+    .ab-mobile-sub-img {
+        display: none;
+    }
+}
+
 @media (max-width: 480px) {
-    .ab-x-image-box img { height: 250px !important; }
-    .ab-x-title { font-size: 40px; }
+    .ab-main-heading { font-size: 34px; }
+    .ab-image-col    { height: 220px; }
+    .ab-img-main-wrap { height: 220px; }
+    .ab-mobile-sub-img { height: 180px; }
 }
